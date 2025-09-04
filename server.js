@@ -200,3 +200,14 @@ app.get("/setWebhook", async (req, res) => {
   const data = await response.json();
   res.json(data);
 });
+
+// ==== Auto-ping para mantener activo el backend y refrescar la propia URL cada 3 minutos ====
+setInterval(async () => {
+  try {
+    const res = await fetch("https://serverbdbs.onrender.com/");
+    const text = await res.text();
+    console.log("🔁 Auto-ping realizado:", text);
+  } catch (error) {
+    console.error("❌ Error en auto-ping:", error.message);
+  }
+}, 180000); // 180000 ms = 3 minutos
